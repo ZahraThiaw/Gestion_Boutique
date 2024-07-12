@@ -41,6 +41,18 @@ class Validator {
         }
     }
 
+    public function validatemax($field, $value, $max) {
+        if ($value > $max) {
+            $this->errors[$field] = 'Ce champ doit être inferieur à '.$max;
+        }
+    }
+
+    public function validatemin($field, $value, $min) {
+        if ($value < $min) {
+            $this->errors[$field] = 'Ce champ doit être superieur à '.$min;
+        }
+    }
+
     public function validateMatch($field, $value, $fieldToMatch, $valueToMatch) {
         if ($value !== $valueToMatch) {
             $this->errors[$field] = 'Les champs ne correspondent pas.';

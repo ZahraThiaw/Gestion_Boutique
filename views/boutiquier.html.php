@@ -82,7 +82,7 @@
                     <div class="border p-4 rounded-md mb-4">
                         <div class="flex items-center mb-4">
                             <span class="font-medium text-gray-700 mr-2">Client:</span>
-                            <form action="enregistrerdettes" method="POST">
+                            <form action="/enregistrerdettes" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $Clients->id; ?>">
                                 <button class="ml-auto px-4 py-2 bg-teal-500 text-white rounded-md mr-2" style="background-color: #019b98;">Nouvelle</button>
                             </form>

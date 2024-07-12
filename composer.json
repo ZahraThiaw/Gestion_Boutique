@@ -8,6 +8,8 @@
             "App\\Core\\Model\\":"src/core/model/",
             "App\\Core\\Database\\":"src/core/database/",
             "App\\Core\\Securite\\":"src/core/security/",
+            "App\\Core\\Interface\\":"src/core/interface/",
+            "App\\Core\\Validator\\":"src/core/validator/",
             "App\\App\\":"src/app/",
             "App\\App\\Entity\\":"src/app/entity/",
             "App\\App\\Model\\":"src/app/model/",

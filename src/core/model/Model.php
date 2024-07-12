@@ -29,12 +29,26 @@ abstract class Model {
         return $this->database->prepare($sql, $data, $this->entityName, true);
     }
 
-    public function hasMany($column, $value) {
-        $sql = "SELECT * FROM " . $this->table . " WHERE $column = :$column";
-        $data = [":$column" => $value];
+    public function hasMany($foreignKey, $value) {
+        $sql = "SELECT * FROM " . $this->table . " WHERE $foreignKey = :$foreignKey";
+        $data = [":$foreignKey" => $value];
         return $this->database->prepare($sql, $data, $this->entityName, false);
     }
 
+    public function belongsTo($foreignKey, $value) {
+        $sql = "SELECT * FROM " . $this->table . " WHERE id = (SELECT $foreignKey FROM " . $this->table . " WHERE id = :id)";
+        $data = [':id' => $value];
+        return $this->database->prepare($sql, $data, $this->entityName, true);
+    }
+    
+
+    public function belongsToMany($pivotTable, $foreignKey, $value, $relatedTable) {
+        $sql = "SELECT * FROM $relatedTable WHERE id IN 
+                (SELECT $foreignKey FROM $pivotTable WHERE id = :id)";
+        $data = [':id' => $value];
+        return $this->database->prepare($sql, $data, $this->entityName, false);
+    }
+    
     
 
     
