@@ -9,7 +9,12 @@ abstract class Controller {
     {
         $this->session = new Session();
     }
+    
 
+    protected function redirect($url) {
+        header("Location: {$url}");
+        exit;
+    }
     
     protected function renderView($view, $data = []) {
         extract($data);
@@ -22,10 +27,6 @@ abstract class Controller {
     }
 
 
-    protected function redirect($url) {
-        header("Location: {$url}");
-        exit;
-    }
 
 
 

@@ -29,7 +29,7 @@ abstract class Model {
         return $this->database->prepare($sql, $data, $this->entityName, true);
     }
 
-    public function hasMany($foreignKey, $value) {
+    public function hasMany($foreignKey, $value, $status = null) {
         $sql = "SELECT * FROM " . $this->table . " WHERE $foreignKey = :$foreignKey";
         $data = [":$foreignKey" => $value];
         return $this->database->prepare($sql, $data, $this->entityName, false);
@@ -74,14 +74,14 @@ abstract class Model {
         return $this->database->prepare($sql, $data, $entityName, $single);
     }
 
-    // private function buildSetClause(array $data): string
-    // {
-    //     $set = [];
-    //     foreach ($data as $key => $value) {
-    //         $set[] = "$key = :$key";
-    //     }
-    //     return implode(', ', $set);
-    // }
+    private function buildSetClause(array $data): string
+    {
+        $set = [];
+        foreach ($data as $key => $value) {
+            $set[] = "$key = :$key";
+        }
+        return implode(', ', $set);
+    }
 
     private function buildPlaceholders(array $data): string
     {
@@ -96,14 +96,14 @@ abstract class Model {
      */
     public function save(array $data)
     {
-        // if (isset($data['id'])) {
-        //     // Update
-        //     return $this->database->prepare("UPDATE {$this->table} SET " . $this->buildSetClause($data) . " WHERE id = ?", array_values($data), $this->entityName);
-        // } else {
-        //     // Insert
+        if (isset($data['id'])) {
+            // Update
+            return $this->database->prepare("UPDATE {$this->table} SET " . $this->buildSetClause($data) . " WHERE id = ?", array_values($data), $this->entityName);
+        } else {
+            // Insert
         
             return $this->database->prepare("INSERT INTO {$this->table} (" . implode(', ', array_keys($data)) . ") VALUES (" . $this->buildPlaceholders($data) . ")", array_values($data), $this->entityName);
-        //}
+        }
     }
 
     public function delete($id) {

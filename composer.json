@@ -10,6 +10,7 @@
             "App\\Core\\Securite\\":"src/core/security/",
             "App\\Core\\Interface\\":"src/core/interface/",
             "App\\Core\\Validator\\":"src/core/validator/",
+            "App\\Core\\Pagination\\":"src/core/pagination/",
             "App\\App\\":"src/app/",
             "App\\App\\Entity\\":"src/app/entity/",
             "App\\App\\Model\\":"src/app/model/",

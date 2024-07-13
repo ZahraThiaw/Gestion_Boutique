@@ -17,11 +17,9 @@ $route->post('boutiquier', ['controller' => 'UtilisateurController', 'action' =>
 $route->post('literdettes',['controller' => 'DetteController', 'action' => 'show']);
 $route->post('listerarticles',['controller' => 'ArticleController', 'action' => 'showarticle']);
 $route->post('listerpaiements',['controller' => 'PaiementController', 'action' => 'showpaiement']);
-$route->post('enregistrerpaiement',['controller' => 'PaiementController', 'action' => 'formaddpaiement']);
-$route->post('add',['controller' => 'DetteController', 'action' => 'formadd']);
+$route->post('enregistrerpaiement',['controller' => 'PaiementController', 'action' => 'addpaiement']);
 $route->get('dette/add/', ['controller' => 'ExoController', 'action' => 'store']);
 $route->get('dette/add/#id/#date', ['controller' => 'ExoController', 'action' => 'storeparam']);
-
 
 $route->get('dette/form', function() {
     echo "Bonsoir";

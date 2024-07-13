@@ -45,60 +45,111 @@ class PaiementController extends Controller
         ]);
     }
 
-    public function formaddpaiement() {
-        // vérifier si la dette est soldée
-        $dette = $this->detteModel->findBy('id', $_POST['id']);
-        if ($dette->montant_restant == 0) {
-            $this->renderView('listerdettes', ['error' => 'La dette est déjà soldeée.']);
-            return;
-        }
-        $this->renderView('enregistrerpaiement');
-    }
 
-    public function addpaiement() {
-        $id = $_POST['id'];
-        // Recuperer les informations de la dette
-        $dette = $this->detteModel->findBy('id', $id);
-        //var_dump($dette);
-
-        //Recuperer les informations du client
-        $client = $this->utilisateurModel->findBy('id', $dette->utilisateursId);
-        //var_dump($client);
-
+    public function addpaiement()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = [
-                'dettesId' => $id,
-                'montant' => $_POST['montant'] ?? '',
-                'date' => date('Y-m-d H:i:s'),
-            ];
+            $detteId = $_POST['id'];
 
-            // Valider les données avec le validateur existant dans votre contrôleur
-            $this->validator->validate($data, [
-                'montant' => ['required' => true, 'numeric' => true, 'min' => 1, 'max' => $dette->montant_restant],
-            ]);
+            // Récupérer la dette à partir de l'ID
+            $dette = $this->detteModel->findBy('id', $detteId);
+            
+            // Récupérer les informations du client
+            $client = $this->utilisateurModel->findBy('id', $dette->utilisateursId);
 
-            // Gérer les erreurs de validation
-            if ($this->validator->hasErrors()) {
-                $errors = $this->validator->getErrors();
-                $this->renderView('enregistrerpaiement', [
-                    'dette' => $dette,
-                    'client' => $client,
-                    'errors' => $errors
-                ]);
-                return;
+            if ($dette && isset($_POST['montant']) && is_numeric($_POST['montant'])) {
+                $montant = floatval($_POST['montant']);
+
+                if ($dette->montant_restant > 0) {
+                    if ($montant > 0 && $montant <= $dette->montant_restant) {
+                        // Enregistrer le paiement
+                        $paiementData = [
+                            'date' => date('Y-m-d'),
+                            'montant' => $montant,
+                            'dettesId' => $detteId
+                        ];
+                        $this->paiementModel->save($paiementData);
+
+                         // Mettre à jour le montant versé de la dette
+                        $this->detteModel->updateMontantVerse($dette->id, $montant);
+
+                        // Mettre à jour le montant restant de la dette
+                        $this->detteModel->updateMontantRestant($dette->id, $montant);
+
+                        $successMessage = "Le paiement a été effectué avec succès.";
+                        //$this->redirect("listerdettes?success={$successMessage}");
+                        $this->renderView('enregistrerpaiement', compact('dette', 'client', 'successMessage'));
+                    }
+                     else {
+                        $error = "Le montant doit être inférieur ou égal au montant restant.";
+                        $this->renderView('enregistrerpaiement', compact('dette', 'client', 'error'));
+                    }
+                } else {
+                    $error = "Cette dette est déjà soldée.";
+                    $this->renderView('listerdettes', compact('dette', 'client', 'error'));
+                }
             }
 
-            // Si aucune erreur, sauvegarder les données dans la base de données
-            $this->paiementModel->insert($data);
-
-            $this->renderView('enregistrerpaiement', [
-                'dette' => $dette,
-                'client' => $client,
-                'success' => 'Paiement effectué avec succès'
-            ]);
-            $this->redirect('enregistrerpaiement');
+            // Afficher la vue avec les erreurs si nécessaire
+            $this->renderView('enregistrerpaiement', compact('dette', 'client'));
+        } else {
+            $error = "Méthode non autorisée.";
+            $this->renderView('listerdettes', compact('error'));
         }
     }
+
+
+//     public function addpaiement()
+// {
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//         $detteId = $_POST['id'];
+
+//         // Récupérer la dette à partir de l'ID
+//         $dette = $this->detteModel->findBy('id', $detteId);
+        
+//         // Récupérer les informations du client
+//         $client = $this->utilisateurModel->findBy('id', $dette->utilisateursId);
+
+//         if ($dette && isset($_POST['montant']) && is_numeric($_POST['montant'])) {
+//             $montant = floatval($_POST['montant']);
+
+//             if ($dette->montant_restant > 0) {
+//                 if ($montant > 0 && $montant <= $dette->montant_restant) {
+//                     // Enregistrer le paiement
+//                     $paiementData = [
+//                         'date' => date('Y-m-d'),
+//                         'montant' => $montant,
+//                         'dettesId' => $detteId
+//                     ];
+//                     $this->paiementModel->save($paiementData);
+
+//                     // Mettre à jour le montant versé de la dette
+//                     $this->detteModel->updateMontantVerse($dette->id, $montant);
+
+//                     // Mettre à jour le montant restant de la dette
+//                     $this->detteModel->updateMontantRestant($dette->id, $montant);
+
+//                     // Ajouter le message de succès dans la session
+//                     $this->session->set('success', "Le paiement a été effectué avec succès.");
+
+//                     // Rediriger vers la page enregistrerdette
+//                     $this->redirect("enregistrerdette?id={$dette->utilisateursId}");
+//                 } else {
+//                     $error = "Le montant doit être inférieur ou égal au montant restant.";
+//                 }
+//             } else {
+//                 $error = "Cette dette est déjà soldée.";
+//             }
+//         }
+
+//         // Afficher la vue avec les erreurs si nécessaire
+//         $this->renderView('enregistrerpaiement', compact('dette', 'client'));
+//     } else {
+//         $error = "Méthode non autorisée.";
+//         $this->renderView('listerdettes', compact('error'));
+//     }
+// }
+
 
     
 }
