@@ -15,8 +15,9 @@ class BoutiquierController extends Controller {
     }
 
     public function index() {
-        $boutiquier = $this->utilisateurModel->all();
-        $this->renderView('boutiquier', ['boutiquier' => $boutiquier]);
+        //$boutiquier = $this->utilisateurModel->all();
+        //$this->renderView('boutiquier', ['boutiquier' => $boutiquier]);
+        $this->renderView('boutiquier');
     }
 
     public function create() {

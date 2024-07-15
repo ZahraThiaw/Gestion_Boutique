@@ -8,7 +8,12 @@
 </head>
 <body class="bg-gray-100 p-8">
     <div class="max-w-7xl mx-auto bg-white p-8 rounded-lg shadow mt-8">
-        <h1 class="text-3xl font-bold mb-4">Liste des dettes</h1>
+        <h1 class="text-3xl font-bold mb-4 text-center">Liste des dettes</h1>
+        <div class="mb-4">
+            <p><strong>Nom:</strong> <?php echo $client->nom; ?></p>
+            <p><strong>Prénom:</strong> <?php echo $client->prenom; ?></p>
+            <p><strong>Téléphone:</strong> <?php echo $client->telephone; ?></p>
+        </div>
 
         <?php if (!empty($error)) : ?>
             <div class="text-red-500 text-center mb-4"><?php echo $error; ?></div>

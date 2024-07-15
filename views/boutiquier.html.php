@@ -15,10 +15,24 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-    <div class="max-w-full mx-auto p-4 px-12">
-        <div class="text-center bg-gray-300 p-4 rounded mb-6">
-            <h1 class="text-3xl font-bold">Bienvenue sur le site de gestion des dettes</h1>
-        </div>
+    <div class="mx-auto p-4 px-12">
+        <!-- <div class="flex justify-between items-center text-center bg-gray-300 p-4 rounded mb-6 px-20">
+            <h1 class="text-3xl font-bold text-center">Bienvenue sur le site de gestion des dettes</h1>
+
+            <aside class="p-4 flex">
+                <ul class="flex">
+                    <li>
+                        <a href="/boutiquier" class="block py-2 px-4 hover:bg-gray-300 w-full text-left">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="/listerdettes" class="block py-2 px-4 hover:bg-gray-300 w-full text-left">Lister les dettes</a>
+                    </li>
+                    <li>
+                        <a href="/enregistrerdette" class="block py-2 px-4 hover:bg-gray-300 w-full text-left">Enregistrer une dette</a>
+                    </li>
+                </ul>
+            </aside>
+        </div> -->
         <div class="flex mt-10">
             <!-- Formulaire de saisie client -->
             <div class="w-1/2 bg-white p-4 rounded shadow-md mr-4">

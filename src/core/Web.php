@@ -5,15 +5,16 @@ use App\Core\Route;
 require_once '../helpers/routecallback.php';
 
 
+require_once '../views/menu.html.php';
 // Récupération de l'instance de Route
 $route = Route::getInstance();
 
 // Ajout des routes
-$route->get('boutiquier', ['controller' => 'BoutiquierController', 'action' => 'index']);
+$route->get('boutiquier', ['controller' => 'UtilisateurController', 'action' => 'accueil']);
 $route->get('login', ['controller' => 'UtilisateurController', 'action' => 'index']);
 $route->post('connexion/login', ['controller' => 'UtilisateurController', 'action' => 'login']);
-$route->post('clientsave', ['controller' => 'UtilisateurController', 'action' => 'saveClient']);
-$route->post('boutiquier', ['controller' => 'UtilisateurController', 'action' => 'searchByPhone']);
+$route->post('clientsave', ['controller' => 'ClientController', 'action' => 'saveClient']);
+$route->post('boutiquier', ['controller' => 'ClientController', 'action' => 'searchByPhone']);
 $route->post('literdettes',['controller' => 'DetteController', 'action' => 'show']);
 $route->post('listerarticles',['controller' => 'ArticleController', 'action' => 'showarticle']);
 $route->post('listerpaiements',['controller' => 'PaiementController', 'action' => 'showpaiement']);

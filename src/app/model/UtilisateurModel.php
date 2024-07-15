@@ -13,9 +13,9 @@ class UtilisateurModel extends Model
         return UtilisateurEntity::class;
     }
 
-    public function all() {
-        return $this->database->query("SELECT * FROM " . $this->table, false);
-    }
+    // public function all() {
+    //     return $this->database->query("SELECT * FROM " . $this->table, false);
+    // }
 
     public function findByTelephone($telephone) {
         $sql = "

@@ -3,6 +3,7 @@ namespace App\App\Controller;
 
 use App\Core\Controller;
 use App\App\App;
+use App\Core\Recu\Recu;
 use App\Core\Validator;
 
 class PaiementController extends Controller
@@ -75,6 +76,18 @@ class PaiementController extends Controller
 
                         // Mettre à jour le montant restant de la dette
                         $this->detteModel->updateMontantRestant($dette->id, $montant);
+
+                        // Générer un reçu de paiement
+                        $recu = new  Recu();
+                        $data = [
+                            'montant' => $montant,
+                            'date' => date('Y-m-d'),
+                            'nom' => $client->nom,
+                            'prenom' => $client->prenom,
+                            'telephone' => $client->telephone,
+                            'montant_restant' => $dette->montant_restant,
+                        ];
+                        $recu->generateRecu($data, '../public/recus');
 
                         $successMessage = "Le paiement a été effectué avec succès.";
                         //$this->redirect("listerdettes?success={$successMessage}");

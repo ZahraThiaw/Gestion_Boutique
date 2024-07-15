@@ -11,6 +11,10 @@
             "App\\Core\\Interface\\":"src/core/interface/",
             "App\\Core\\Validator\\":"src/core/validator/",
             "App\\Core\\Pagination\\":"src/core/pagination/",
+            "App\\Core\\Config\\":"src/core/config/",
+            "App\\Core\\Recu\\":"src/core/recu/",
+            "App\\Core\\Error\\":"src/core/error/",
+            "App\\Core\\File\\":"src/core/file/",
             "App\\App\\":"src/app/",
             "App\\App\\Entity\\":"src/app/entity/",
             "App\\App\\Model\\":"src/app/model/",
@@ -25,6 +29,8 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "symfony/yaml": "^6.4",
+        "fpdf/fpdf": "^1.86"
     }
 }

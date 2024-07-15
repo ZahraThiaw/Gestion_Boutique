@@ -135,7 +135,7 @@ class Route {
                         $action = $callback['action'];
 
                         if (!$this->invokeControllerAction($controllerClass, $action, $matches)) {
-                            ErrorController::error();
+                            //ErrorController::error();
                         }
                     }
                     return;

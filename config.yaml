@@ -1,0 +1,17 @@
+database:
+  driver: mysql
+  dsn: 'mysql:host=localhost;port=3306;dbname=GESTIONBOUTIQUE;charset=utf8mb4'
+  user: 'fatimata'
+  password: 'passer123'
+
+validator:
+  class: App\Core\Validator\Validator
+
+files:
+  class: App\Core\FileHandler
+  imagesTypes:
+    - jpg
+    - jpeg
+    - png
+    - gif
+  dir: '../public/images/uploads/'

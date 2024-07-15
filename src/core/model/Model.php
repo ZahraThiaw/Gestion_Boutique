@@ -6,7 +6,7 @@ use App\Core\Database\MysqlDatabase;
 use \PDO;
 use PDOException;
 
-abstract class Model {
+abstract class Model implements ModelInterface{
     protected $database;
     protected $table;
     protected $entityName; // Propriété pour stocker le nom de la classe
@@ -17,10 +17,10 @@ abstract class Model {
         $this->entityName = $entityName;
     }
 
-    public function all() {
-        $sql = "SELECT * FROM {$this->table}";
-        return $this->database->query($sql, $this->entityName);
-    }
+    // public function all() {
+    //     $sql = "SELECT * FROM {$this->table}";
+    //     return $this->database->query($sql, $this->entityName);
+    // }
     
 
     public function findBy($column, $value) {
@@ -41,10 +41,10 @@ abstract class Model {
         return $this->database->prepare($sql, $data, $this->entityName, true);
     }
     
-
-    public function belongsToMany($pivotTable, $foreignKey, $value, $relatedTable) {
+    
+    public function belongsToMany($pivotTable, $foreignKey, $value, $relatedTable, $pivotForeignKey) {
         $sql = "SELECT * FROM $relatedTable WHERE id IN 
-                (SELECT $foreignKey FROM $pivotTable WHERE id = :id)";
+                (SELECT $foreignKey FROM $pivotTable WHERE $pivotForeignKey = :id)";
         $data = [':id' => $value];
         return $this->database->prepare($sql, $data, $this->entityName, false);
     }
