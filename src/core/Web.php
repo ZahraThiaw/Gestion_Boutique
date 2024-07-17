@@ -16,6 +16,7 @@ $route->post('connexion/login', ['controller' => 'UtilisateurController', 'actio
 $route->post('clientsave', ['controller' => 'ClientController', 'action' => 'saveClient']);
 $route->post('boutiquier', ['controller' => 'ClientController', 'action' => 'searchByPhone']);
 $route->post('literdettes',['controller' => 'DetteController', 'action' => 'show']);
+$route->post('enregistrerdette',['controller' => 'DetteController', 'action' => 'add']);
 $route->post('listerarticles',['controller' => 'ArticleController', 'action' => 'showarticle']);
 $route->post('listerpaiements',['controller' => 'PaiementController', 'action' => 'showpaiement']);
 $route->post('enregistrerpaiement',['controller' => 'PaiementController', 'action' => 'addpaiement']);

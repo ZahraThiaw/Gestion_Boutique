@@ -31,7 +31,7 @@ class ArticleController extends Controller {
         
         // Recuperer les articles de la dette
         $articles = $this->articleModel->belongsToMany('dettearticles','articlesId', $id, 'articles', 'dettesId');
-        var_dump($articles);
+        //var_dump($articles);
         
         // Recupérer les quantités des articles de la dette
         $dettearticles = $this->dettearticleModel->findBy('dettesId', $id);

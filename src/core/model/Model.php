@@ -17,10 +17,10 @@ abstract class Model implements ModelInterface{
         $this->entityName = $entityName;
     }
 
-    // public function all() {
-    //     $sql = "SELECT * FROM {$this->table}";
-    //     return $this->database->query($sql, $this->entityName);
-    // }
+    public function all() {
+        $sql = "SELECT * FROM {$this->table}";
+        return $this->database->query($sql, $this->entityName);
+    }
     
 
     public function findBy($column, $value) {
@@ -48,9 +48,6 @@ abstract class Model implements ModelInterface{
         $data = [':id' => $value];
         return $this->database->prepare($sql, $data, $this->entityName, false);
     }
-    
-    
-
     
 
 
@@ -133,4 +130,18 @@ abstract class Model implements ModelInterface{
             return false;
         }
     }
+
+
+    public function transaction(callable $callback) {
+        try {
+            $this->database->beginTransaction();
+            $result = $callback($this);
+            $this->database->commit();
+            return $result;
+        } catch (\Exception $e) {
+            $this->database->rollback();
+            throw $e;
+        }
+    }
+
 }

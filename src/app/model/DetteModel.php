@@ -73,4 +73,8 @@ class DetteModel extends Model
         return $this->database->prepare($sql, ['id' => $id, 'montant' => $montant], $this->getEntity());
     }
     
+    public function lastInsertId() {
+        return $this->database->lastInsertId(); // Assurez-vous que $this->database est une instance de MysqlDatabase
+    }
+    
 }
